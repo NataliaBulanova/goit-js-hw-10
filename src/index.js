@@ -1,6 +1,7 @@
 import './css/styles.css';
 import { debounce } from 'lodash';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import API from './api-servise';
 const searchBox = document.querySelector('#search-box');
 const countryList = document.querySelector('.country-list');
 const countryInfo = document.querySelector('.country-info');
@@ -15,7 +16,7 @@ function onSearch() {
     clearInnerHTML();
     return;
   }
-  fetchCountry(filter)
+  API.fetchCountry(filter)
     .then(country => {
       if (country.length > LIMIT) {
         Notify.info('Too many matches found. Please enter a more specific name.');
@@ -65,16 +66,6 @@ function createMarkup(country) {
 function catchError() {
   Notify.failure('Oops, there is no country with that name');
   clearInnerHTML();
-}
-function fetchCountry(country) {
-  return fetch(
-    `https://restcountries.com/v2/name/${country}?fields=name,capital,population,flags,languages`,
-  ).then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return response.json();
-  });
 }
 function clearInnerHTML() {
   countryList.innerHTML = '';
