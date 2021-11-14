@@ -10,4 +10,4 @@ function fetchCountry(country) {
   );
 }
 
-export default { fetchCountry };
+export { fetchCountry };

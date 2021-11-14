@@ -1,7 +1,7 @@
 import './css/styles.css';
 import { debounce } from 'lodash';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import API from './api-servise';
+import { fetchCountry } from './api-servise';
 const searchBox = document.querySelector('#search-box');
 const countryList = document.querySelector('.country-list');
 const countryInfo = document.querySelector('.country-info');
@@ -16,7 +16,7 @@ function onSearch() {
     clearInnerHTML();
     return;
   }
-  API.fetchCountry(filter)
+  fetchCountry(filter)
     .then(country => {
       if (country.length > LIMIT) {
         Notify.info('Too many matches found. Please enter a more specific name.');
